@@ -1,1 +1,0 @@
-@copy /y Examples-nfx-2.0.csproj ..\Examples\Examples.csproj
