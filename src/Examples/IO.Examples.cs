@@ -46,6 +46,11 @@ namespace CSharpSDKExamples
 
             SimpleUploader su = new SimpleUploader();
 
+            // 支持自定义参数
+            //var extra = new System.Collections.Generic.Dictionary<string, string>();
+            //extra.Add("FileType", "UploadFromLocal");
+            //extra.Add("YourKey", "YourValue");
+
             HttpResult result = su.uploadFile(localFile, saveKey, token);
 
             Console.WriteLine(result);
@@ -145,12 +150,12 @@ namespace CSharpSDKExamples
             Mac mac = new Mac(Settings.AccessKey, Settings.SecretKey);
 
             string bucket = "test";
-            string saveKey = "video-1.avi";
-            string localFile = "D:\\QFL\\media\\1.avi";
+            string saveKey = "video-1.mp4";
+            string localFile = "D:\\QFL\\1.mp4";
 
             // 断点记录文件，可以不用设置，让SDK自动生成，如果出现续上传的情况，SDK会尝试从该文件载入断点记录
             // 对于不同的上传任务，请使用不同的recordFile
-            string recordFile = "D:\\QFL\\resume.12345"; 
+            string recordFile = "D:\\QFL\\resume.1235"; 
 
             PutPolicy putPolicy = new PutPolicy();
             putPolicy.Scope = bucket;
@@ -179,7 +184,16 @@ namespace CSharpSDKExamples
             // uploadFile(localFile,saveKey,token,recordFile,uploadProgressHandler,uploadController)
             // 
             // 使用默认进度处理，使用自定义上传控制
-            HttpResult result = ru.uploadFileAdvanced(localFile, saveKey, token, recordFile, 10, null);
+
+            // 支持自定义参数
+            //var extra = new System.Collections.Generic.Dictionary<string, string>();
+            //extra.Add("FileType", "UploadFromLocal");
+            //extra.Add("YourKey", "YourValue");
+
+            UploadProgressHandler upph = new UploadProgressHandler(ResumableUploader.defaultUploadProgressHandler);
+            UploadController upctl = new UploadController(uploadControl);
+
+            HttpResult result = ru.uploadFile(localFile, saveKey, token, recordFile, 10, upph, upctl);
 
             Console.WriteLine(result);
         }
