@@ -1,5 +1,6 @@
 ﻿using System;
-using Qiniu.Common;
+using System.Collections.Generic;
+using Qiniu.Util;
 using Qiniu.RS;
 using Qiniu.RS.Model;
 using Qiniu.Http;
@@ -20,11 +21,11 @@ namespace CSharpSDKExamples
             Mac mac = new Mac(Settings.AccessKey, Settings.SecretKey);
 
             string bucket = "test";
-            string key = "1.jpg";
+            string key = "L-1.avi";
 
             BucketManager bm = new BucketManager(mac);
 
-            StatResult result = bm.stat(bucket, key);
+            StatResult result = bm.Stat(bucket, key);
 
             Console.WriteLine(result);
         }
@@ -46,7 +47,7 @@ namespace CSharpSDKExamples
 
             BucketManager bm = new BucketManager(mac);
 
-            BatchResult result = bm.batchStat(bucket, keys);
+            var result = bm.BatchStat(bucket, keys);
 
             Console.WriteLine(result);
         }
@@ -63,7 +64,7 @@ namespace CSharpSDKExamples
 
             BucketManager bm = new BucketManager(mac);
 
-            HttpResult result = bm.delete(bucket, key);
+            var result = bm.Delete(bucket, key);
 
             Console.WriteLine(result);
         }
@@ -85,7 +86,7 @@ namespace CSharpSDKExamples
 
             BucketManager bm = new BucketManager(mac);
 
-            BatchResult result = bm.batchDelete(bucket, keys);
+            var result = bm.BatchDelete(bucket, keys);
 
             Console.WriteLine(result);
         }
@@ -103,10 +104,11 @@ namespace CSharpSDKExamples
             string dstKey = "2.txt";
 
             BucketManager bm = new BucketManager(mac);
-            HttpResult result = bm.copy(srcBucket, srcKey, dstBucket, dstKey);
+
+            var result = bm.Copy(srcBucket, srcKey, dstBucket, dstKey);
 
             //支持force参数, bool force = true/false
-            //HttpResult result = bm.Copy(srcBucket, srcKey, dstBucket, dstKey, force);
+            //var result = bm.Copy(srcBucket, srcKey, dstBucket, dstKey, force);
 
             Console.WriteLine(result);
         }
@@ -124,10 +126,11 @@ namespace CSharpSDKExamples
             string dstKey = "2.txt";
 
             BucketManager bm = new BucketManager(mac);
-            HttpResult result = bm.move(srcBucket, srcKey, dstBucket, dstKey);
+
+            var result = bm.Move(srcBucket, srcKey, dstBucket, dstKey);
 
             //支持force参数, bool force = true/false
-            //HttpResult result = bm.Move(srcBucket, srcKey, dstBucket, dstKey, force);
+            //var result = bm.Move(srcBucket, srcKey, dstBucket, dstKey, force);
 
             Console.WriteLine(result);
         }
@@ -144,7 +147,8 @@ namespace CSharpSDKExamples
             string dstKey = "2.txt";
 
             BucketManager bm = new BucketManager(mac);
-            HttpResult result = bm.rename(bucket, srcKey, dstKey);
+            
+            var result= bm.Rename(bucket, srcKey, dstKey);
 
             Console.WriteLine(result);
         }
@@ -160,7 +164,8 @@ namespace CSharpSDKExamples
             string mimeType = "text/html";
 
             BucketManager bm = new BucketManager(mac);
-            HttpResult result = bm.chgm(bucket, key, mimeType);
+
+            var result = bm.Chgm(bucket, key, mimeType);
 
             Console.WriteLine(result);
         }
@@ -177,7 +182,8 @@ namespace CSharpSDKExamples
             string remoteUrl = "http://remote-url.com/file-name";
 
             BucketManager bm = new BucketManager(mac);
-            HttpResult result = bm.fetch(remoteUrl, bucket, saveKey);
+
+            var result = bm.Fetch(remoteUrl, bucket, saveKey);
 
             Console.WriteLine(result);
         }
@@ -193,7 +199,8 @@ namespace CSharpSDKExamples
             string key = "1.jpg";
 
             BucketManager bm = new BucketManager(mac);
-            HttpResult result = bm.prefetch(bucket, key);
+
+            var result = bm.Prefetch(bucket, key);
 
             Console.WriteLine(result);
         }
@@ -209,7 +216,7 @@ namespace CSharpSDKExamples
             // op=<op1>&op=<op2>&op=<op3>...
             string batchOps = "op=OP1&op=OP2";
             BucketManager bm = new BucketManager(mac);
-            var result = bm.batch(batchOps);
+            var result = bm.Batch(batchOps);
             // 或者
             //string[] batch_ops={"<op1>","<op2>","<op3>",...};
             //bm.Batch(batch_ops);
@@ -224,7 +231,8 @@ namespace CSharpSDKExamples
         {
             Mac mac = new Mac(Settings.AccessKey, Settings.SecretKey);
             BucketManager bm = new BucketManager(mac);
-            BucketsResult result = bm.buckets();
+
+            var result = bm.Buckets();
 
             Console.WriteLine(result);
         }
@@ -238,7 +246,8 @@ namespace CSharpSDKExamples
 
             Mac mac = new Mac(Settings.AccessKey, Settings.SecretKey);
             BucketManager bm = new BucketManager(mac);
-            BucketResult result = bm.bucket(bkt);
+
+            var result = bm.Bucket(bkt);
 
             Console.WriteLine(result);
         }
@@ -253,32 +262,14 @@ namespace CSharpSDKExamples
             string bucket = "test";
 
             BucketManager bm = new BucketManager(mac);
-            DomainsResult result = bm.domains(bucket);
+
+            var result = bm.Domains(bucket);
 
             Console.WriteLine(result);
         }
 
         /// <summary>
-        /// 获取空间文件列表
-        /// 
-        /// BucketManager.listFiles(bucket, prefix, marker, limit, delimiter)
-        /// 
-        /// bucket:    目标空间名称
-        /// 
-        /// prefix:    返回指定文件名前缀的文件列表(prefix可设为null)
-        /// 
-        /// marker:    考虑到设置limit后返回的文件列表可能不全(需要重复执行listFiles操作)
-        ///            执行listFiles操作时使用marker标记来追加新的结果
-        ///            特别注意首次执行listFiles操作时marker为null   
-        ///            
-        /// limit:     每次返回结果所包含的文件总数限制(limit最大值1000，建议值100) 
-        /// 
-        /// delimiter: 分隔符，比如-或者/等等，可以模拟作为目录结构(参考下述示例)
-        ///            假设指定空间中有2个文件 fakepath/1.txt fakepath/2.txt
-        ///            现设置分隔符delimiter = / 得到返回结果items =[]，commonPrefixes = [fakepath/]
-        ///            然后调整prefix = fakepath/ delimiter = null 得到所需结果items = [1.txt,2.txt]
-        ///            于是可以在本地先创建一个目录fakepath,然后在该目录下写入items中的文件  
-        ///            
+        /// 获取空间文件列表          
         /// </summary>
         public static void listFiles()
         {
@@ -291,26 +282,16 @@ namespace CSharpSDKExamples
             int limit = 100; // 单次列举数量限制(最大值为1000)
 
             BucketManager bm = new BucketManager(mac);
-            //List<FileDesc> items = new List<FileDesc>();
-            //List<string> commonPrefixes = new List<string>();
+
+            List<FileDesc> items = new List<FileDesc>();
+            List<string> commonPrefixes = new List<string>();
 
             do
             {
-                ListResult result = bm.listFiles(bucket, prefix, marker, limit, delimiter);
+                var result = bm.ListFiles(bucket, prefix, marker, limit, delimiter);
 
                 Console.WriteLine(result);
-
                 marker = result.Result.Marker;
-                
-                //if (result.Result.Items != null)
-                //{
-                //    items.AddRange(result.Result.Items);
-                //}
-
-                //if (result.Result.CommonPrefixes != null)
-                //{
-                //    commonPrefixes.AddRange(result.Result.CommonPrefixes);
-                //}
 
             } while (!string.IsNullOrEmpty(marker));
 
@@ -339,7 +320,8 @@ namespace CSharpSDKExamples
             int deleteAfterDays = 1;
 
             BucketManager bm = new BucketManager(mac);
-            HttpResult result = bm.updateLifecycle(bucket, key, deleteAfterDays);
+
+            var result = bm.UpdateLifecycle(bucket, key, deleteAfterDays);
 
             Console.WriteLine(result);
         }

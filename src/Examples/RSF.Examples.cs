@@ -1,9 +1,6 @@
 ﻿using System;
-using Qiniu.Common;
 using Qiniu.RSF;
-using Qiniu.RSF.Model;
 using Qiniu.Util;
-using Qiniu.Http;
 
 namespace CSharpSDKExamples
 {
@@ -29,20 +26,20 @@ namespace CSharpSDKExamples
 
             // 需要执行的操作，如图片缩放
             string fopM = "imageView2/0/w/200";
-            string saveAsUri = StringHelper.urlSafeBase64Encode(dstBucket + ":" + dstKey);
+            string saveAsUri = Base64.UrlSafeBase64Encode(dstBucket + ":" + dstKey);
             string fops = fopM + "|saveas/" + saveAsUri;
 
             Mac mac = new Mac(Settings.AccessKey, Settings.SecretKey);
 
             OperationManager ox = new OperationManager(mac);
-            PfopResult result = ox.pfop(bucket, key, fops, pipeline, notifyUrl, force);
+
+            var result = ox.Pfop(bucket, key, fops, pipeline, notifyUrl, force);
+
+            Console.WriteLine(result);
 
             // 稍后可以根据PersistentId查询处理进度/结果
-            string persistentId = result.PersistentId;
-            HttpResult pr = ox.prefop(persistentId);
-            Console.WriteLine(pr);
-
-            //Console.WriteLine(result);
+            //string persistentId = result.PersistentId;
+            //var pr = OperationManager.Prefop(persistentId);
 
         }
 
@@ -58,7 +55,7 @@ namespace CSharpSDKExamples
             string fop = "imageView2/0/w/400";
             string url = "http://img.ivsky.com/img/tupian/pre/201610/09/beifang_shanlin_xuejing-001.jpg";
 
-            var result = ox.dfop(fop, url);
+            var result = ox.Dfop(fop, url);
 
             Console.WriteLine(result);
         }
@@ -72,9 +69,9 @@ namespace CSharpSDKExamples
             OperationManager ox = new OperationManager(mac);
 
             string fop = "imageInfo";
-            string localFile= "D:\\QFL\\1.jpg"; 
+            string localFile= "D:\\QFL\\1.png"; 
 
-            var result = ox.dfop(fop, localFile);
+            var result = ox.Dfop(fop, localFile);
 
             Console.WriteLine(result);
         }
@@ -91,7 +88,7 @@ namespace CSharpSDKExamples
 
             // 方式1：从本地文件读取文本内容
             string localFile = "D:\\QFL\\1.jpg";
-            var result = ox.dfopText(fop, localFile);
+            var result = ox.DfopText(fop, localFile);
 
             // 方式2：直接传入文本内容
             //string text = "这是待处理的文本内容";

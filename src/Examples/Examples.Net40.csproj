@@ -41,9 +41,9 @@
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net40\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Qiniu, Version=7.2.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Qiniu.Shared.7.2.3\lib\net40\Qiniu.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Qiniu, Version=7.2.7.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\csharp-sdk\bin\net40\Qiniu.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Xml.Linq" />
@@ -63,7 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-	<None Include="..\Packages.Net35.config" />
+    <None Include="..\Packages.Net40.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

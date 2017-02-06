@@ -1,5 +1,5 @@
 ﻿using System;
-using Qiniu.Common;
+using Qiniu.Util;
 using Qiniu.CDN;
 using Qiniu.CDN.Model;
 
@@ -14,17 +14,18 @@ namespace CSharpSDKExamples
         /// <summary>
         /// 缓存刷新
         /// </summary>
-        public static void refresh()
+        public static void cdnRefresh()
         {
             Mac mac = new Mac(Settings.AccessKey, Settings.SecretKey);
-            FusionManager fusionMgr = new FusionManager(mac);
+            CdnManager fusionMgr = new CdnManager(mac);
 
             string[] urls = new string[] { "http://yourdomain.bkt.clouddn.com/somefile.php" };
             string[] dirs = new string[] { "http://yourdomain.bkt.clouddn.com/" };
             RefreshRequest request = new RefreshRequest();
             request.AddUrls(urls);
             request.AddDirs(dirs);
-            RefreshResult result = fusionMgr.refresh(request);
+
+            var result = fusionMgr.RefreshUrlsAndDirs(request);
 
             Console.WriteLine(result);
         }
@@ -32,14 +33,14 @@ namespace CSharpSDKExamples
         /// <summary>
         /// 文件预取
         /// </summary>
-        public static void prefetch()
+        public static void cdnPrefetch()
         {
             Mac mac = new Mac(Settings.AccessKey, Settings.SecretKey);
-            FusionManager fusionMgr = new FusionManager(mac);
+            CdnManager fusionMgr = new CdnManager(mac);
 
             string[] urls = new string[] { "http://yourdomain.clouddn.com/somefile.php" };
             PrefetchRequest request = new PrefetchRequest(urls);
-            PrefetchResult result = fusionMgr.prefetch(request);
+            PrefetchResult result = fusionMgr.PrefetchUrls(request);
 
             Console.WriteLine(result);
         }
@@ -47,17 +48,17 @@ namespace CSharpSDKExamples
         /// <summary>
         /// 带宽
         /// </summary>
-        public static void bandwidth()
+        public static void cdnBandwidth()
         {
             Mac mac = new Mac(Settings.AccessKey, Settings.SecretKey);
-            FusionManager fusionMgr = new FusionManager(mac);
+            CdnManager fusionMgr = new CdnManager(mac);
 
             BandwidthRequest request = new BandwidthRequest();
             request.StartDate = "2016-09-01"; 
             request.EndDate = "2016-09-20";
             request.Granularity = "day";
             request.Domains = "yourdomain.bkt.clouddn.com;yourdomain2;yourdomain3";
-            BandwidthResult result = fusionMgr.bandwidth(request);
+            BandwidthResult result = fusionMgr.GetBandwidthData(request);
 
             Console.WriteLine(result);
         }
@@ -65,17 +66,17 @@ namespace CSharpSDKExamples
         /// <summary>
         /// 流量
         /// </summary>
-        public static void flux()
+        public static void cdnFlux()
         {
             Mac mac = new Mac(Settings.AccessKey, Settings.SecretKey);
-            FusionManager fusionMgr = new FusionManager(mac);
+            CdnManager fusionMgr = new CdnManager(mac);
 
             FluxRequest request = new FluxRequest();
             request.StartDate = "START_DATE"; 
             request.EndDate = "END_DATE"; 
             request.Granularity = "GRANU";
             request.Domains = "DOMAIN1;DOMAIN2"; 
-            FluxResult result = fusionMgr.flux(request);
+            FluxResult result = fusionMgr.GetFluxData(request);
 
             Console.WriteLine(result);
         }
@@ -83,15 +84,15 @@ namespace CSharpSDKExamples
         /// <summary>
         /// 日志查询
         /// </summary>
-        public static void loglist()
+        public static void cdnLogList()
         {
             Mac mac = new Mac(Settings.AccessKey, Settings.SecretKey);
-            FusionManager fusionMgr = new FusionManager(mac);
+            CdnManager fusionMgr = new CdnManager(mac);
 
             LogListRequest request = new LogListRequest();
             request.Day = "2016-09-01"; // date:which-day
             request.Domains = "DOMAIN1;DOMAIN2"; // domains
-            LogListResult result = fusionMgr.logList(request);
+            LogListResult result = fusionMgr.GetCdnLogList(request);
 
             Console.WriteLine(result);
         }
@@ -102,9 +103,9 @@ namespace CSharpSDKExamples
         public void hotLink()
         {
             Mac mac = new Mac(Settings.AccessKey, Settings.SecretKey);
-            FusionManager fusionMgr = new FusionManager(mac);
+            CdnManager fusionMgr = new CdnManager(mac);
 
-            HotLinkRequest request = new HotLinkRequest();
+            TimestampAntiLeechUrlRequest request = new TimestampAntiLeechUrlRequest();
             request.Host = "http://your-host";
             request.Path = "/path/";
             request.File = "file-name";
@@ -113,7 +114,7 @@ namespace CSharpSDKExamples
 
             //request.RawUrl
 
-            string prefLink = fusionMgr.hotLink(request);
+            string prefLink = fusionMgr.CreateTimestampAntiLeechUrl(request);
 
             Console.WriteLine(prefLink);
         }

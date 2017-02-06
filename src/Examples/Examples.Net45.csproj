@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>CSharpSDKExamples</RootNamespace>
     <AssemblyName>CSharpSDKExamples</AssemblyName>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -18,9 +18,9 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <BaseIntermediateOutputPath>..\..\bin\net20\obj</BaseIntermediateOutputPath>
-    <OutputPath>..\..\bin\net20\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;Net20</DefineConstants>
+    <BaseIntermediateOutputPath>..\..\bin\net45\obj</BaseIntermediateOutputPath>
+    <OutputPath>..\..\bin\net45\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;Net45</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
@@ -29,23 +29,25 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <BaseIntermediateOutputPath>..\..\bin\net20\obj</BaseIntermediateOutputPath>
-    <OutputPath>..\..\bin\net20\</OutputPath>
-    <DefineConstants>TRACE;Net20</DefineConstants>
+    <BaseIntermediateOutputPath>..\..\bin\net45\obj</BaseIntermediateOutputPath>
+    <OutputPath>..\..\bin\net45\</OutputPath>
+    <DefineConstants>TRACE;Net45</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net20\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\..\csharp-sdk\bin\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="Qiniu, Version=7.2.7.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Qiniu, Version=7.2.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\csharp-sdk\bin\net20\Qiniu.dll</HintPath>
+      <HintPath>..\..\..\csharp-sdk\bin\net45\Qiniu.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
@@ -60,7 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="packages.config" />
+    <None Include="..\Packages.Net40.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

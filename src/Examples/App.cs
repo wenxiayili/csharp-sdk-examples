@@ -8,97 +8,117 @@
         static void Main(string[] args)
         {
             // 载入密钥设置(AK&SK)		
-            Settings.LoadFromFile("D:\\QFL\\qkey.txt");
-            //Settings.Load();
+            //Settings.LoadFromFile("D:\\QFL\\qkey.txt");
+            Settings.Load();
+
+            #region Qiniu-IO
 
             // 上传一个文件
-            //UploadDemo.uploadFile();
+            UploadDemo.uploadFile();
 
             // 上传字节数据
-            //UploadDemo.uploadData();
+            UploadDemo.uploadData();
+
+            // 上传数据流
+            UploadDemo.uploadStream();
 
             // 上传后触发fop(数据处理)
-            //UploadDemo.uploadWithFop();
+            UploadDemo.uploadWithFop();
 
             // 断点续上传
             UploadDemo.uploadBigFile();
 
             // 下载文件
-            //DownloadDemo.downloadFile();
+            DownloadDemo.downloadFile();
 
             // 下载私有文件
-            //DownloadDemo.downloadPrivateFile();
+            DownloadDemo.downloadPrivateFile();
+
+            #endregion Qiniu-IO
+
+            #region Qiniu-RS
 
             // 空间文件stat
-            //BucketDemo.stat();
+            BucketDemo.stat();
 
             // 批量stat
-            //BucketDemo.batchStat();
+            BucketDemo.batchStat();
 
             // 删除空间文件
-            //BucketDemo.delete();
+            BucketDemo.delete();
 
             // 批量删除
-            //BucketDemo.batchDelete();
+            BucketDemo.batchDelete();
 
             // 复制空间文件
-            //BucketDemo.copy();
+            BucketDemo.copy();
 
             // 移动空间文件
-            //BucketDemo.move();
+            BucketDemo.move();
 
             // 修改空间文件的mimeType
-            //BucketDemo.chgm();
+            BucketDemo.chgm();
 
             // 批量操作
-            //BucketDemo.batch();
+            BucketDemo.batch();
 
             // 取回文件并保存到空间
-            //BucketDemo.fetch();
+            BucketDemo.fetch();
 
             // 镜像资源更新
-            //BucketDemo.prefetch();
+            BucketDemo.prefetch();
 
             // 列举所有bucket
-            //BucketDemo.buckets();
+            BucketDemo.buckets();
 
-            //BucketDemo.bucket();
+            // 获取bucket属性信息
+            BucketDemo.bucket();
 
             // 获取指定bucket的域名
-            //BucketDemo.domains();
+            BucketDemo.domains();
 
             // 获取空间文件列表
-            //BucketDemo.listFiles();
+            BucketDemo.listFiles();
 
             // 更新文件的生命周期
-            //BucketDemo.updateLifecycle();
+            BucketDemo.updateLifecycle();
+
+            #endregion Qiniu-RS
+
+            #region Qiniu-RSF
 
             // 文件处理+保存处理结果
-            //ProcessingDemo.pfopAndSave();
+            ProcessingDemo.pfopAndSave();
 
             // 数据处理dfop:url
-            //ProcessingDemo.dfopUrl();
+            ProcessingDemo.dfopUrl();
 
             // 文本处理
-            //ProcessingDemo.dfopText();
+            ProcessingDemo.dfopText();
 
             // 数据处理dfop:data
-            //ProcessingDemo.dfopData();
+            ProcessingDemo.dfopData();
+
+            #endregion Qiniu-RSF
+
+            #region Qiniu-CDN
 
             // 融合CDN 缓存刷新
-            //FusionDemo.refresh();
+            FusionDemo.cdnRefresh();
 
             // 融合CDN 文件预取
-            //FusionDemo.prefetch();
+            FusionDemo.cdnPrefetch();
 
             // 融合CDN 带宽
-            //FusionDemo.bandwidth();
+            FusionDemo.cdnBandwidth();
 
             // 融合CDN 流量
-            //FusionDemo.flux();
+            FusionDemo.cdnFlux();
 
             // 融合CDN 日志查询
-            //FusionDemo.loglist();
+            FusionDemo.cdnLogList();
+
+            #endregion Qiniu-CDN
 
             System.Console.ReadLine();
         }

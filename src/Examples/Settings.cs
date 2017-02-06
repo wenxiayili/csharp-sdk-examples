@@ -15,7 +15,7 @@ namespace CSharpSDKExamples
         {
             if (!loaded)
             {
-                AccessKey = "<ACCESS_KEY>";
+				AccessKey = "<ACCESS_KEY>";
                 SecretKey = "<SECRET_KEY>";
 
                 loaded = true;
